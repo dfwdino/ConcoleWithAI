@@ -5,20 +5,22 @@ using OllamaGPTOSS.src.infrastructure.services;
 using OllamaSharp;
 
 //Pull form DB
-ChatAIModel ChatAIModel = new ChatAIModel("http://localhost:11434/", "llama3.2-vision");
+ChatAIModel ChatAISettings = new ChatAIModel("http://localhost:11434/", "llama3.2-vision");
 
 
 // Initialize OllamaApiClient targeting the "gpt-oss:20b" model
-IChatClient chatClient = new OllamaApiClient(new Uri(ChatAIModel.BrandUri), ChatAIModel.ModelName);
+IChatClient chatClient = new OllamaApiClient(new Uri(ChatAISettings.BrandUri), ChatAISettings.ModelName);
 
 PromptService promptService = new PromptService();
 
 //Need to add this to the Chat Model selection. For now, hardcoding to Educational and Assistant.
-PromptType SelectedType = PromptType.Educational;
+PromptType SelectedType = PromptTypeExtensions.GetType("kids");
 ChatRole SelectedRole = ChatRole.Assistant;
 
 Console.WriteLine(PromptTypeExtensions.ToStringValue(PromptType.Educational));
+
 Console.WriteLine(PromptTypeExtensions.GetType("kids").ToString());
+
 Console.WriteLine(SelectedType);
 
 // Maintain conversation history
